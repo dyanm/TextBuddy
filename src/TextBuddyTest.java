@@ -9,29 +9,29 @@ import org.junit.runners.MethodSorters;
 public class TextBuddyTest {
 
 	@Test
-	public void testLoadFile() {
+	public void a_testLoadFile() {
 		String[] fileName = {"testFile.txt"};
 		TextBuddy.loadFile(fileName);
 		assertTrue(new File("testFile.txt").exists());
 	}
 	
 	@Test
-	public void testAddNewLine() {
+	public void b_testAddNewLine() {
 		fail("Not yet implemented"); // TODO	
 	}
 	
 	@Test
-	public void testDeleteExistingLine() {
+	public void c_testDeleteExistingLine() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	public void testDisplayFileContents() {
+	public void d_testClearFileContents() {
 		fail("Not yet implemented"); // TODO
 	}
-
+	
 	@Test
-	public void testClearFileContents() {
+	public void e_testDisplayFileContents() {
 		fail("Not yet implemented"); // TODO
 	}
 }

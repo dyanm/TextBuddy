@@ -75,7 +75,7 @@ public class TextBuddy {
 		}
 	}
 	
-	protected static void createFile(File file) {
+	private static void createFile(File file) {
 		try {
 			if (file.createNewFile())
 				displayMessage(String.format(MESSAGE_FILE_NOT_FOUND, fileName), true);
