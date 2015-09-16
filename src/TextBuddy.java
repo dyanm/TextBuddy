@@ -110,7 +110,7 @@ public class TextBuddy {
 		case "display":
 			return displayFileContents();
 		case "clear":
-			return clearFileContents();
+			return clearFileContents(fileName);
 		case "exit":
 			displayMessage(MESSAGE_EXIT, true);
 			System.exit(0);
@@ -199,11 +199,11 @@ public class TextBuddy {
 		}
 	}
 	
-	protected static String clearFileContents() {
+	protected static String clearFileContents(String name) {
 		try {
-			new File(fileName).delete();
-			new File(fileName).createNewFile();
-			return String.format(MESSAGE_CLEAR_SUCCESS, fileName);
+			new File(name).delete();
+			new File(name).createNewFile();
+			return String.format(MESSAGE_CLEAR_SUCCESS, name);
 		} 
 		catch (IOException e) {
 			return MESSAGE_CLEAR_FAIL;

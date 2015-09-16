@@ -10,9 +10,10 @@ public class TextBuddyTest {
 
 	@Test
 	public void a_testLoadFile() {
+		TextBuddy.clearFileContents("testFile.txt");
 		String[] fileName = {"testFile.txt"};
 		TextBuddy.loadFile(fileName);
-		assertTrue(new File("testFile.txt")..exists());
+		assertTrue(new File("testFile.txt").exists());
 	}
 	
 	@Test
