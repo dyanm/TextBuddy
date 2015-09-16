@@ -10,7 +10,9 @@ public class TextBuddyTest {
 
 	@Test
 	public void testLoadFile() {
-		fail("Not yet implemented"); // TODO
+		String[] fileName = {"testFile.txt"};
+		TextBuddy.loadFile(fileName);
+		assertTrue(new File("testFile.txt").exists());
 	}
 	
 	@Test
