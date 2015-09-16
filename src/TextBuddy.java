@@ -43,7 +43,7 @@ public class TextBuddy {
 														+ "exit - exit TextBuddy\n";
 	
 	private static Scanner sc = new Scanner(System.in);
-	protected static String fileName = "";
+	private static String fileName = "";
 	
 	public static void main(String[] args) {
 		loadFile(args);
