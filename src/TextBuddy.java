@@ -43,7 +43,7 @@ public class TextBuddy {
 														+ "exit - exit TextBuddy\n";
 	
 	private static Scanner sc = new Scanner(System.in);
-	private static String fileName = "";
+	protected static String fileName = "";
 	
 	public static void main(String[] args) {
 		loadFile(args);
@@ -61,7 +61,7 @@ public class TextBuddy {
     //=========================================================================================================================
 	
 	// Load or create file based on passed argument or user input to allow flexibility.
-	private static void loadFile(String[] args) {
+	protected static void loadFile(String[] args) {
 		if (args.length != 0) {
 			fileName = args[0];
 			createFile(new File(args[0]));
@@ -75,7 +75,7 @@ public class TextBuddy {
 		}
 	}
 	
-	private static void createFile(File file) {
+	protected static void createFile(File file) {
 		try {
 			if (file.createNewFile())
 				displayMessage(String.format(MESSAGE_FILE_NOT_FOUND, fileName), true);
@@ -91,7 +91,7 @@ public class TextBuddy {
     // Command Functions
     //=========================================================================================================================
 	
-	public static String executeCommand(String userInput) {
+	private static String executeCommand(String userInput) {
 		String commandType = getFirstWord(userInput);
 		String commandParameters = removeFirstWord(userInput);
 		
@@ -119,7 +119,7 @@ public class TextBuddy {
 		}
 	}
 	
-	private static String addNewLine(String commandParameters) {
+	protected static String addNewLine(String commandParameters) {
 		if (commandParameters.isEmpty())
 			return String.format(MESSAGE_INVALID_PARAMETER, commandParameters);
 		
@@ -133,7 +133,7 @@ public class TextBuddy {
 		}
 	}
 	
-	private static String deleteExistingLine(String commandParameters) {
+	protected static String deleteExistingLine(String commandParameters) {
 		int deletedLineNumber;
 		// Checks if the command parameter is a valid integer before proceeding to prevent mis-entry by the user.
 		try {
@@ -178,7 +178,7 @@ public class TextBuddy {
 		return String.format(MESSAGE_DELETE_SUCCESS, fileName, deletedLine);
 	}
 	
-	private static String displayFileContents() {
+	protected static String displayFileContents() {
 		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
 			StringBuffer sb = new StringBuffer("");
 			String line = "";
@@ -199,7 +199,7 @@ public class TextBuddy {
 		}
 	}
 	
-	private static String clearFileContents() {
+	protected static String clearFileContents() {
 		try {
 			new File(fileName).delete();
 			new File(fileName).createNewFile();
