@@ -1,0 +1,44 @@
+mytestfile.txt has been loaded successfully.
+
+Welcome to TextBuddy. mytestfile.txt is now ready for use.
+
+Available commands:
+add (text) - add text to file
+delete (line number) - delete line from file
+display - display all text from file
+clear - clear all content from file
+exit - exit TextBuddy
+
+Enter your command: added to mytestfile.txt: "Hahaha"
+
+Enter your command: invalid command parameter: 
+
+Enter your command: added to mytestfile.txt: "Hehehe"
+
+Enter your command: added to mytestfile.txt: "Hohoho"
+
+Enter your command: added to mytestfile.txt: "Huhuhu"
+
+Enter your command: 1. Hahaha
+2. Hehehe
+3. Hohoho
+4. Huhuhu
+
+Enter your command: line number 120 does not exist in mytestfile.txt
+
+Enter your command: 1. Hahaha
+2. Hehehe
+3. Hohoho
+4. Huhuhu
+
+Enter your command: deleted from mytestfile.txt: "Hehehe"
+
+Enter your command: 1. Hahaha
+2. Hohoho
+3. Huhuhu
+
+Enter your command: all content deleted from mytestfile.txt
+
+Enter your command: mytestfile.txt is empty.
+
+Enter your command: Thank you for using TextBuddy.

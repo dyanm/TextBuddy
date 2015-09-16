@@ -1,0 +1,13 @@
+add Hahaha
+add 
+add Hehehe
+add Hohoho
+add Huhuhu
+display
+delete 120
+display
+delete 2
+display
+clear
+display
+exit
