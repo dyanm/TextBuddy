@@ -37,6 +37,7 @@ public class TextBuddyTest {
 	
 	@Test
 	public void e_testDisplayFileContents() {
-		fail("Not yet implemented"); // TODO
+		TextBuddy.addNewLine("little brown fox");
+		assertEquals(TextBuddy.displayFileContents(), "1. little brown fox\n");
 	}
 }
