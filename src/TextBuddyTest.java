@@ -12,7 +12,7 @@ public class TextBuddyTest {
 	public void a_testLoadFile() {
 		String[] fileName = {"testFile.txt"};
 		TextBuddy.loadFile(fileName);
-		assertTrue(new File("testFile.txt").exists());
+		assertTrue(new File("testFile.txt")..exists());
 	}
 	
 	@Test
@@ -23,7 +23,7 @@ public class TextBuddyTest {
 	
 	@Test
 	public void c_testDeleteExistingLine() {
-		fail("Not yet implemented"); // TODO
+		assertEquals(TextBuddy.deleteExistingLine("2"), "deleted from testFile.txt: \"jumped over the moon\"\n");
 	}
 
 	@Test
