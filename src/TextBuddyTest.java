@@ -16,8 +16,8 @@ public class TextBuddyTest {
 	}
 	
 	@Test
-	public void b_testAddNewLine() {
-		fail("Not yet implemented"); // TODO	
+	public void b_testAddNewLine() {	
+		assertEquals(TextBuddy.addNewLine("little brown fox"), "added to testFile.txt: \"little brown fox\"\n");
 	}
 	
 	@Test
