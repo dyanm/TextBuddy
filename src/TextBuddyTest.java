@@ -95,4 +95,14 @@ public class TextBuddyTest {
 		TextBuddy.addNewLine("jumped over the moon");
 		assertEquals("2. little brown fox\n", TextBuddy.searchFileContents("LITTLE BROWN FOX"));
 	}
+	
+	@Test
+	public void testSearchFileContentsContains() {
+		TextBuddy.loadFile(new String[]{fileName});
+		TextBuddy.clearFileContents();
+		TextBuddy.addNewLine("there is no spoon");
+		TextBuddy.addNewLine("little brown fox");
+		TextBuddy.addNewLine("jumped over the moon");
+		assertEquals("2. little brown fox\n", TextBuddy.searchFileContents("lit"));
+	}
 }
