@@ -212,33 +212,14 @@ public class TextBuddy {
 	}
 	
 	protected static String sortFileContents() {
-		ArrayList<String> listOfContents = new ArrayList<String>();
-		
-		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-			String line = "";
-			
-			while ((line = br.readLine()) != null) {
-				listOfContents.add(line);
-			}
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+		ArrayList<String> listOfContents = addFileContentsToList();
 		
 		if (listOfContents.isEmpty())
 				return formatMessage(MESSAGE_FILE_EMPTY, new Object[]{fileName});
 			
 		Collections.sort(listOfContents);
 		
-		try (FileWriter fw = new FileWriter(new File(fileName))) {
-			for (String s : listOfContents)
-				fw.write(s + "\n");
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return formatMessage(MESSAGE_SORT_SUCCESS, new Object[]{fileName});
+		return writeListContentsToFile(listOfContents);
 	}
 	
 	//=========================================================================================================================
@@ -264,4 +245,33 @@ public class TextBuddy {
 		else
 			System.out.print(text);
 	}
+
+	private static ArrayList<String> addFileContentsToList() {
+		ArrayList<String> temp = new ArrayList<String>();
+		
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+			String line = "";
+			
+			while ((line = br.readLine()) != null) {
+				temp.add(line);
+			}
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}	
+	
+	private static String writeListContentsToFile(ArrayList<String> temp) {
+		try (FileWriter fw = new FileWriter(new File(fileName))) {
+			for (String s : temp)
+				fw.write(s + "\n");
+			
+			return formatMessage(MESSAGE_SORT_SUCCESS, new Object[]{fileName});
+		}
+		catch (IOException e) {
+			return formatMessage(MESSAGE_SORT_FAIL, new Object[]{fileName});
+		}
+	}		
 }
