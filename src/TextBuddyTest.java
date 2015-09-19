@@ -75,4 +75,14 @@ public class TextBuddyTest {
 				   + "3. there is no spoon\n", 
 				   TextBuddy.displayFileContents());
 	}
+
+	@Test
+	public void testSearchFileContentsExact() {
+		TextBuddy.loadFile(new String[]{fileName});
+		TextBuddy.clearFileContents();
+		TextBuddy.addNewLine("there is no spoon");
+		TextBuddy.addNewLine("little brown fox");
+		TextBuddy.addNewLine("jumped over the moon");
+		assertEquals("2. little brown fox", TextBuddy.searchFileContents("little brown fox"));
+	}
 }

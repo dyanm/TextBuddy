@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -125,11 +124,11 @@ public class TextBuddy {
 		if (commandParameters.isEmpty())
 			return formatMessage(MESSAGE_INVALID_PARAMETER, new Object[]{commandParameters});
 		
-		ArrayList<String> temp =  addFileContentsToList();
+		ArrayList<String> listOfContents =  addFileContentsToList();
 		
-		temp.add(commandParameters);
+		listOfContents.add(commandParameters);
 		
-		return writeListContentsToFile(temp, MESSAGE_ADD, new Object[]{fileName, commandParameters}, 
+		return writeListContentsToFile(listOfContents, MESSAGE_ADD, new Object[]{fileName, commandParameters}, 
 									   MESSAGE_INVALID_PARAMETER, new Object[]{commandParameters});
 	}
 	
@@ -144,25 +143,25 @@ public class TextBuddy {
 			return formatMessage(MESSAGE_INVALID_PARAMETER, new Object[]{commandParameters});
 		}
 		
-		ArrayList<String> temp = addFileContentsToList();
+		ArrayList<String> listOfContents = addFileContentsToList();
 		
-		if (deletedLineNumber > temp.size() || deletedLineNumber < 1) {
+		if (deletedLineNumber > listOfContents.size() || deletedLineNumber < 1) {
 			return formatMessage(MESSAGE_DELETE_LINE_NOT_FOUND, new Object[]{deletedLineNumber, fileName});
 		}
 		else {
-			deletedLine = temp.get(deletedLineNumber-1);
-			temp.remove(deletedLineNumber-1);
+			deletedLine = listOfContents.get(deletedLineNumber-1);
+			listOfContents.remove(deletedLineNumber-1);
 		}
 		
-		return writeListContentsToFile(temp, MESSAGE_DELETE_SUCCESS, new Object[]{fileName, deletedLine}, MESSAGE_DELETE_FAIL, null);
+		return writeListContentsToFile(listOfContents, MESSAGE_DELETE_SUCCESS, new Object[]{fileName, deletedLine}, MESSAGE_DELETE_FAIL, null);
 	}
 	
 	protected static String displayFileContents() {
-		ArrayList<String> temp = addFileContentsToList();
+		ArrayList<String> listOfContents = addFileContentsToList();
 		String fileContents = "";
 		
-		for (int i = 0; i < temp.size(); i++) {
-			fileContents = fileContents + (i+1) + ". " + temp.get(i) + "\n";
+		for (int i = 0; i < listOfContents.size(); i++) {
+			fileContents = fileContents + (i+1) + ". " + listOfContents.get(i) + "\n";
 		}
 		
 		if (fileContents.trim().isEmpty())
