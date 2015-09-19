@@ -83,6 +83,16 @@ public class TextBuddyTest {
 		TextBuddy.addNewLine("there is no spoon");
 		TextBuddy.addNewLine("little brown fox");
 		TextBuddy.addNewLine("jumped over the moon");
-		assertEquals("2. little brown fox", TextBuddy.searchFileContents("little brown fox"));
+		assertEquals("2. little brown fox\n", TextBuddy.searchFileContents("little brown fox"));
+	}
+	
+	@Test
+	public void testSearchFileContentsIgnoreCase() {
+		TextBuddy.loadFile(new String[]{fileName});
+		TextBuddy.clearFileContents();
+		TextBuddy.addNewLine("there is no spoon");
+		TextBuddy.addNewLine("little brown fox");
+		TextBuddy.addNewLine("jumped over the moon");
+		assertEquals("2. little brown fox\n", TextBuddy.searchFileContents("LITTLE BROWN FOX"));
 	}
 }
