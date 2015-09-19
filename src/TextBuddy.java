@@ -47,7 +47,7 @@ public class TextBuddy {
 	
 	public static void main(String[] args) {
 		loadFile(args);
-		displayMessage(String.format(MESSAGE_WELCOME, fileName), true);
+		displayMessage(formatMessage(MESSAGE_WELCOME, new Object[]{fileName}), true);
 		displayMessage(MESSAGE_COMMAND_LIST, true);
 		
 		while (true) {
@@ -78,12 +78,12 @@ public class TextBuddy {
 	private static void createFile(File file) {
 		try {
 			if (file.createNewFile())
-				displayMessage(String.format(MESSAGE_FILE_NOT_FOUND, fileName), true);
+				displayMessage(formatMessage(MESSAGE_FILE_NOT_FOUND, new Object[]{fileName}), true);
 			else
-				displayMessage(String.format(MESSAGE_FILE_FOUND, fileName), true);
+				displayMessage(formatMessage(MESSAGE_FILE_FOUND, new Object[]{fileName}), true);
 		} 
 		catch (IOException e) {
-			throw new Error(String.format(MESSAGE_FILE_NOT_FOUND, fileName));
+			throw new Error(formatMessage(MESSAGE_FILE_NOT_FOUND, new Object[]{fileName}));
 		}
 	}
 	
@@ -115,21 +115,21 @@ public class TextBuddy {
 			displayMessage(MESSAGE_EXIT, true);
 			System.exit(0);
 		default:
-			return String.format(MESSAGE_INVALID_FORMAT, userInput);
+			return formatMessage(MESSAGE_INVALID_FORMAT, new Object[]{userInput});
 		}
 	}
 	
 	protected static String addNewLine(String commandParameters) {
 		if (commandParameters.isEmpty())
-			return String.format(MESSAGE_INVALID_PARAMETER, commandParameters);
+			return formatMessage(MESSAGE_INVALID_PARAMETER, new Object[]{commandParameters});
 		
 		// Appends a new line to the text file based on user input and the file is only accessed when the command is processed.
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true))) {
 			bw.write(commandParameters + "\n");
-			return String.format(MESSAGE_ADD, fileName, commandParameters);
+			return formatMessage(MESSAGE_ADD, new Object[]{fileName, commandParameters});
 		}
 		catch (IOException e) {
-			return String.format(MESSAGE_INVALID_PARAMETER, commandParameters);
+			return formatMessage(MESSAGE_INVALID_PARAMETER, new Object[]{commandParameters});
 		}
 	}
 	
@@ -140,7 +140,7 @@ public class TextBuddy {
 			deletedLineNumber = Integer.parseInt(commandParameters);
 		}
 		catch (NumberFormatException e) {
-			return String.format(MESSAGE_INVALID_PARAMETER, commandParameters);
+			return formatMessage(MESSAGE_INVALID_PARAMETER, new Object[]{commandParameters});
 		}
 		
 		String deletedLine = "";
@@ -162,7 +162,7 @@ public class TextBuddy {
 			
 			// Returns Line Not Found message when the user-specified line number is out of valid range.
 			if (deletedLineNumber > currentLineNumber)
-				return String.format(MESSAGE_DELETE_LINE_NOT_FOUND, deletedLineNumber, fileName);
+				return formatMessage(MESSAGE_DELETE_LINE_NOT_FOUND, new Object[]{deletedLineNumber, fileName});
 		}
 		catch (IOException e) {
 			return MESSAGE_DELETE_FAIL;
@@ -175,7 +175,7 @@ public class TextBuddy {
 		catch (IOException e) {
 			return MESSAGE_DELETE_FAIL;
 		}
-		return String.format(MESSAGE_DELETE_SUCCESS, fileName, deletedLine);
+		return formatMessage(MESSAGE_DELETE_SUCCESS, new Object[]{fileName, deletedLine});
 	}
 	
 	protected static String displayFileContents() {
@@ -190,7 +190,7 @@ public class TextBuddy {
 			}
 			
 			if (sb.toString().isEmpty())
-				return String.format(MESSAGE_DISPLAY_EMPTY, fileName);
+				return formatMessage(MESSAGE_DISPLAY_EMPTY, new Object[]{fileName});
 			else
 				return sb.toString().trim() + "\n";
 		}
@@ -203,7 +203,7 @@ public class TextBuddy {
 		try {
 			new File(name).delete();
 			new File(name).createNewFile();
-			return String.format(MESSAGE_CLEAR_SUCCESS, name);
+			return formatMessage(MESSAGE_CLEAR_SUCCESS, new Object[]{name});
 		} 
 		catch (IOException e) {
 			return MESSAGE_CLEAR_FAIL;
@@ -221,6 +221,10 @@ public class TextBuddy {
 
 	private static String removeFirstWord(String userCommand) {
 		return userCommand.replace(getFirstWord(userCommand), "").trim();
+	}
+	
+	private static String formatMessage(String message, Object[] msgArg) {
+		return String.format(message, msgArg);
 	}
 	
 	private static void displayMessage(String text, boolean isPrintLine) {
