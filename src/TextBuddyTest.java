@@ -10,7 +10,9 @@ public class TextBuddyTest {
 
 	private String fileName = "testFile.txt";
 	
-	// CE1 Test cases
+	//=========================================================================================================================
+    // CE1 Test cases
+    //=========================================================================================================================
 	@Test
 	public void testAllCE1() {
 		testLoadFile();
@@ -46,7 +48,9 @@ public class TextBuddyTest {
 		assertEquals("1. little brown fox\n", TextBuddy.displayFileContents());
 	}
 	
-	// CE2 Test cases
+	//=========================================================================================================================
+    // CE2 Test cases
+    //=========================================================================================================================
 	@Test
 	public void testSortFileContentsIsEmpty() {
 		TextBuddy.loadFile(new String[]{fileName});

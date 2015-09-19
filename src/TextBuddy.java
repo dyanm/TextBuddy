@@ -185,6 +185,7 @@ public class TextBuddy {
 		}
 	}
 	
+	// Sort file contents according to alphabetical order
 	protected static String sortFileContents() {
 		ArrayList<String> listOfContents = addFileContentsToList();
 		
@@ -196,6 +197,7 @@ public class TextBuddy {
 		return writeListContentsToFile(listOfContents, MESSAGE_SORT_SUCCESS, new Object[]{fileName}, MESSAGE_SORT_FAIL, new Object[]{fileName});
 	}
 	
+	// Searches using key words specified by the user and returns the result with their respective index
 	protected static String searchFileContents(String searchTerms) {
 		ArrayList<String> listOfContents = addFileContentsToList();
 		HashMap<Integer, String> matchedEntries = new HashMap<Integer, String>();
@@ -219,29 +221,9 @@ public class TextBuddy {
 	}
 	
 	//=========================================================================================================================
-    // Additional Functions
+    // Reading/Writing File Functions
     //=========================================================================================================================
 	
-	private static String getFirstWord(String userCommand) {
-		String commandType = userCommand.trim().split("\\s+")[0];
-		return commandType.toLowerCase();
-	}
-
-	private static String removeFirstWord(String userCommand) {
-		return userCommand.replace(getFirstWord(userCommand), "").trim();
-	}
-	
-	private static String formatMessage(String message, Object[] msgArg) {
-		return String.format(message, msgArg);
-	}
-	
-	private static void displayMessage(String text, boolean isPrintLine) {
-		if (isPrintLine)
-			System.out.println(text);
-		else
-			System.out.print(text);
-	}
-
 	private static ArrayList<String> addFileContentsToList() {
 		ArrayList<String> temp = new ArrayList<String>();
 		
@@ -270,5 +252,29 @@ public class TextBuddy {
 		catch (IOException e) {
 			return formatMessage(fail, failArg);
 		}
-	}		
+	}
+	
+	//=========================================================================================================================
+    // Additional Functions
+    //=========================================================================================================================
+	
+	private static String getFirstWord(String userCommand) {
+		String commandType = userCommand.trim().split("\\s+")[0];
+		return commandType.toLowerCase();
+	}
+
+	private static String removeFirstWord(String userCommand) {
+		return userCommand.replace(getFirstWord(userCommand), "").trim();
+	}
+	
+	private static String formatMessage(String message, Object[] msgArg) {
+		return String.format(message, msgArg);
+	}
+	
+	private static void displayMessage(String text, boolean isPrintLine) {
+		if (isPrintLine)
+			System.out.println(text);
+		else
+			System.out.print(text);
+	}
 }
