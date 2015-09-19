@@ -111,6 +111,8 @@ public class TextBuddy {
 			return displayFileContents();
 		case "clear":
 			return clearFileContents();
+		case "sort":
+			return sortFileContents();
 		case "exit":
 			displayMessage(MESSAGE_EXIT, true);
 			System.exit(0);
@@ -123,7 +125,7 @@ public class TextBuddy {
 		if (commandParameters.isEmpty())
 			return formatMessage(MESSAGE_INVALID_PARAMETER, new Object[]{commandParameters});
 		
-		ArrayList<String> temp = new ArrayList<String>();
+		ArrayList<String> temp =  addFileContentsToList();
 		
 		temp.add(commandParameters);
 		
@@ -133,6 +135,7 @@ public class TextBuddy {
 	
 	protected static String deleteExistingLine(String commandParameters) {
 		int deletedLineNumber;
+		String deletedLine = "";
 		// Checks if the command parameter is a valid integer before proceeding to prevent mis-entry by the user.
 		try {
 			deletedLineNumber = Integer.parseInt(commandParameters);
@@ -143,12 +146,15 @@ public class TextBuddy {
 		
 		ArrayList<String> temp = addFileContentsToList();
 		
-		if (deletedLineNumber > temp.size() || deletedLineNumber < 1)
+		if (deletedLineNumber > temp.size() || deletedLineNumber < 1) {
 			return formatMessage(MESSAGE_DELETE_LINE_NOT_FOUND, new Object[]{deletedLineNumber, fileName});
-		else
+		}
+		else {
+			deletedLine = temp.get(deletedLineNumber-1);
 			temp.remove(deletedLineNumber-1);
+		}
 		
-		return writeListContentsToFile(temp, MESSAGE_DELETE_SUCCESS, new Object[]{deletedLineNumber, fileName}, MESSAGE_DELETE_FAIL, null);
+		return writeListContentsToFile(temp, MESSAGE_DELETE_SUCCESS, new Object[]{fileName, deletedLine}, MESSAGE_DELETE_FAIL, null);
 	}
 	
 	protected static String displayFileContents() {
@@ -230,6 +236,7 @@ public class TextBuddy {
 	
 	private static String writeListContentsToFile(ArrayList<String> temp, String success, Object[] successArg, String fail, Object[] failArg) {
 		try (FileWriter fw = new FileWriter(new File(fileName))) {
+			
 			for (String s : temp)
 				fw.write(s + "\n");
 			

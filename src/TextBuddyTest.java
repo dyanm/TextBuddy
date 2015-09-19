@@ -28,22 +28,22 @@ public class TextBuddyTest {
 	
 	public void testAddNewLine() {
 		TextBuddy.clearFileContents();
-		assertEquals(TextBuddy.addNewLine("little brown fox"), "added to " + fileName + ": \"little brown fox\"\n");
-		assertEquals(TextBuddy.addNewLine("jumped over the moon"), "added to " + fileName + ": \"jumped over the moon\"\n");
+		assertEquals("added to " + fileName + ": \"little brown fox\"\n", TextBuddy.addNewLine("little brown fox"));
+		assertEquals("added to " + fileName + ": \"jumped over the moon\"\n", TextBuddy.addNewLine("jumped over the moon"));
 	}
 	
 	public void testDeleteExistingLine() {
-		assertEquals(TextBuddy.deleteExistingLine("2"), "deleted from " + fileName + ": \"jumped over the moon\"\n");
+		assertEquals("deleted from " + fileName + ": \"jumped over the moon\"\n", TextBuddy.deleteExistingLine("2"));
 	}
 
 	public void testClearFileContents() {
 		TextBuddy.clearFileContents();
-		assertEquals(TextBuddy.displayFileContents(), fileName + " is empty\n");
+		assertEquals(fileName + " is empty\n", TextBuddy.displayFileContents());
 	}
 
 	public void testDisplayFileContents() {
 		TextBuddy.addNewLine("little brown fox");
-		assertEquals(TextBuddy.displayFileContents(), "1. little brown fox\n");
+		assertEquals("1. little brown fox\n", TextBuddy.displayFileContents());
 	}
 	
 	// CE2 Test cases
@@ -51,7 +51,7 @@ public class TextBuddyTest {
 	public void testSortFileContentsIsEmpty() {
 		TextBuddy.loadFile(new String[]{fileName});
 		TextBuddy.clearFileContents();
-		assertEquals(TextBuddy.sortFileContents(), fileName + " is empty\n");
+		assertEquals(fileName + " is empty\n", TextBuddy.sortFileContents());
 	}
 	
 	@Test
@@ -59,7 +59,7 @@ public class TextBuddyTest {
 		TextBuddy.loadFile(new String[]{fileName});
 		TextBuddy.clearFileContents();
 		TextBuddy.addNewLine("little brown fox");
-		assertEquals(TextBuddy.sortFileContents(), fileName + " has been alphabetically sorted\n");
+		assertEquals(fileName + " has been alphabetically sorted\n", TextBuddy.sortFileContents());
 	}
 	
 	@Test
@@ -70,8 +70,9 @@ public class TextBuddyTest {
 		TextBuddy.addNewLine("little brown fox");
 		TextBuddy.addNewLine("jumped over the moon");		
 		TextBuddy.sortFileContents();
-		assertEquals(TextBuddy.displayFileContents(), "1. jumped over the moon\n"
-												 	+ "2. little brown fox\n"
-													+ "3. there is no spoon\n");
+		assertEquals("1. jumped over the moon\n"
+				   + "2. little brown fox\n"
+				   + "3. there is no spoon\n", 
+				   TextBuddy.displayFileContents());
 	}
 }
