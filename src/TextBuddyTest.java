@@ -63,4 +63,16 @@ public class TextBuddyTest {
 		TextBuddy.addNewLine("little brown fox");
 		assertEquals(TextBuddy.sortFileContents(), "notEmptySortTest.txt has been alphabetically sorted\n");
 	}
+	
+	@Test
+	public void testSortFileContentsMultipleLinesOutput() {
+		TextBuddy.loadFile(new String[]{"multipleLinesSortTest.txt"});
+		TextBuddy.addNewLine("little brown fox");
+		TextBuddy.addNewLine("jumped over the moon");
+		TextBuddy.addNewLine("there is no spoon");
+		TextBuddy.sortFileContents();
+		assertEquals(TextBuddy.displayFileContents(), "1. jumped over the moon\n"
+												 	+ "2. little brown fox\n"
+													+ "3. there is no spoon\n");
+	}
 }
