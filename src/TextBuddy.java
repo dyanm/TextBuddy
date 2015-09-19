@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -12,25 +14,24 @@ import java.util.Scanner;
  */
 public class TextBuddy {
 	
-	// These are the common error messages for incorrect user input.
 	private static final String MESSAGE_INVALID_FORMAT = "invalid command format: %1$s\n";
 	private static final String MESSAGE_INVALID_PARAMETER = "invalid command parameter: %1$s\n";
 	
-	// These are the messages for file loading and creation.
 	private static final String MESSAGE_FILE_NOT_SPECIFIED = "No file has been specified.";
 	private static final String MESSAGE_FILE_NOT_FOUND = "%1$s does not exist. %1$s has been created.\n";
 	private static final String MESSAGE_FILE_FOUND = "%1$s has been loaded successfully.\n";
+	private static final String MESSAGE_FILE_EMPTY = "%1$s is empty\n";
 	private static final String MESSAGE_FILE_ENTER = "Please enter a file name (including file extension if any): ";
 	
-	// These are the messages for user commands.
 	private static final String MESSAGE_ADD = "added to %1$s: \"%2$s\"\n";
 	private static final String MESSAGE_DELETE_SUCCESS = "deleted from %1$s: \"%2$s\"\n";
-	private static final String MESSAGE_DELETE_FAIL = "unable to delete line";
+	private static final String MESSAGE_DELETE_FAIL = "unable to delete line.";
 	private static final String MESSAGE_DELETE_LINE_NOT_FOUND = "line number %1$d does not exist in %2$s\n";
-	private static final String MESSAGE_DISPLAY_EMPTY = "%1$s is empty.\n";
-	private static final String MESSAGE_DISPLAY_FAIL = "unable to display contents from file";
+	private static final String MESSAGE_DISPLAY_FAIL = "unable to display contents from file.";
 	private static final String MESSAGE_CLEAR_SUCCESS = "all content deleted from %1$s\n";
 	private static final String MESSAGE_CLEAR_FAIL = "unable to clear file";
+	private static final String MESSAGE_SORT_SUCCESS = "%1$s has been alphabetically sorted\n";
+	private static final String MESSAGE_SORT_FAIL = "unable to sort %1$s";
 	private static final String MESSAGE_EXIT = "Thank you for using TextBuddy.";
 	
 	private static final String MESSAGE_WELCOME = "Welcome to TextBuddy. %1$s is now ready for use.";
@@ -190,7 +191,7 @@ public class TextBuddy {
 			}
 			
 			if (sb.toString().isEmpty())
-				return formatMessage(MESSAGE_DISPLAY_EMPTY, new Object[]{fileName});
+				return formatMessage(MESSAGE_FILE_EMPTY, new Object[]{fileName});
 			else
 				return sb.toString().trim() + "\n";
 		}
@@ -208,6 +209,17 @@ public class TextBuddy {
 		catch (IOException e) {
 			return MESSAGE_CLEAR_FAIL;
 		}
+	}
+	
+	protected static String sortFileContents() {
+		ArrayList<String> listOfContents = new ArrayList<String>();
+		
+		if (listOfContents.isEmpty())
+				return formatMessage(MESSAGE_FILE_EMPTY, new Object[]{fileName});
+			
+		Collections.sort(listOfContents);
+		
+		return formatMessage(MESSAGE_SORT_SUCCESS, new Object[]{fileName});
 	}
 	
 	//=========================================================================================================================

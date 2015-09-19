@@ -52,6 +52,7 @@ public class TextBuddyTest {
 	
 	@Test
 	public void testSortFileContentsIsEmpty() {
+		TextBuddy.loadFile(new String[]{fileName});
 		assertEquals(TextBuddy.sortFileContents(), fileName + " is empty\n");
 	}
 }
