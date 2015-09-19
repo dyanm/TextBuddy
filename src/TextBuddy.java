@@ -201,7 +201,7 @@ public class TextBuddy {
 		HashMap<Integer, String> matchedEntries = new HashMap<Integer, String>();
 		
 		for (int i = 0; i < listOfContents.size(); i++) {
-			if (listOfContents.get(i).equals(searchTerms)) {
+			if (listOfContents.get(i).toLowerCase().equals(searchTerms.toLowerCase())) {
 				matchedEntries.put(i+1, listOfContents.get(i));
 			}
 		}
