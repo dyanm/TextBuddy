@@ -180,24 +180,17 @@ public class TextBuddy {
 	}
 	
 	protected static String displayFileContents() {
-		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-			StringBuffer sb = new StringBuffer("");
-			String line = "";
-			int currentLineNumber = 1;
-			
-			while ((line = br.readLine()) != null) {
-				sb.append(currentLineNumber + ". " + line + "\n");
-				currentLineNumber++;
-			}
-			
-			if (sb.toString().isEmpty())
-				return formatMessage(MESSAGE_FILE_EMPTY, new Object[]{fileName});
-			else
-				return sb.toString().trim() + "\n";
+		ArrayList<String> temp = addFileContentsToList();
+		String result = "";
+		
+		for (int i = 0; i < temp.size(); i++) {
+			result = result + (i+1) + ". " + temp.get(i) + "\n";
 		}
-		catch (IOException e) {
-			return MESSAGE_DISPLAY_FAIL;
-		}
+		
+		if (result.trim().isEmpty())
+			return formatMessage(MESSAGE_FILE_EMPTY, new Object[]{fileName});
+		else
+			return result;
 	}
 	
 	protected static String clearFileContents() {
