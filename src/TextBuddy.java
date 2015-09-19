@@ -230,6 +230,14 @@ public class TextBuddy {
 			
 		Collections.sort(listOfContents);
 		
+		try (FileWriter fw = new FileWriter(new File(fileName))) {
+			for (String s : listOfContents)
+				fw.write(s + "\n");
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		return formatMessage(MESSAGE_SORT_SUCCESS, new Object[]{fileName});
 	}
 	
