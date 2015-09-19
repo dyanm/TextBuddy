@@ -10,34 +10,48 @@ public class TextBuddyTest {
 
 	private String fileName = "testFile.txt";
 	
-	@Test
-	public void a_testLoadFile() {
+	//@Test
+	public void testAll() {
+		testLoadFile();
+		testAddNewLine();
+		testDeleteExistingLine();
+		testClearFileContents();
+		testDisplayFileContents();
+	}
+	
+	//@Test
+	public void testLoadFile() {
 		TextBuddy.clearFileContents(fileName);
 		String[] args = {"testFile.txt"};
 		TextBuddy.loadFile(args);
 		assertTrue(new File(fileName).exists());
 	}
 	
-	@Test
-	public void b_testAddNewLine() {	
+	//@Test
+	public void testAddNewLine() {	
 		assertEquals(TextBuddy.addNewLine("little brown fox"), "added to " + fileName + ": \"little brown fox\"\n");
 		assertEquals(TextBuddy.addNewLine("jumped over the moon"), "added to " + fileName + ": \"jumped over the moon\"\n");
 	}
 	
-	@Test
-	public void c_testDeleteExistingLine() {
+	//@Test
+	public void testDeleteExistingLine() {
 		assertEquals(TextBuddy.deleteExistingLine("2"), "deleted from " + fileName + ": \"jumped over the moon\"\n");
 	}
 
-	@Test
-	public void d_testClearFileContents() {
+	//@Test
+	public void testClearFileContents() {
 		TextBuddy.clearFileContents(fileName);
 		assertEquals(TextBuddy.displayFileContents(), fileName + " is empty.\n");
 	}
 	
-	@Test
-	public void e_testDisplayFileContents() {
+	//@Test
+	public void testDisplayFileContents() {
 		TextBuddy.addNewLine("little brown fox");
 		assertEquals(TextBuddy.displayFileContents(), "1. little brown fox\n");
+	}
+	
+	@Test
+	public void testSortFileContentsIsEmpty() {
+		assertEquals(TextBuddy.sortFileContents(), fileName + " is empty\n");
 	}
 }
