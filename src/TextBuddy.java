@@ -27,7 +27,6 @@ public class TextBuddy {
 	private static final String MESSAGE_DELETE_SUCCESS = "deleted from %1$s: \"%2$s\"\n";
 	private static final String MESSAGE_DELETE_FAIL = "unable to delete line.";
 	private static final String MESSAGE_DELETE_LINE_NOT_FOUND = "line number %1$d does not exist in %2$s\n";
-	private static final String MESSAGE_DISPLAY_FAIL = "unable to display contents from file.";
 	private static final String MESSAGE_CLEAR_SUCCESS = "all content deleted from %1$s\n";
 	private static final String MESSAGE_CLEAR_FAIL = "unable to clear file";
 	private static final String MESSAGE_SORT_SUCCESS = "%1$s has been alphabetically sorted\n";
@@ -124,14 +123,12 @@ public class TextBuddy {
 		if (commandParameters.isEmpty())
 			return formatMessage(MESSAGE_INVALID_PARAMETER, new Object[]{commandParameters});
 		
-		// Appends a new line to the text file based on user input and the file is only accessed when the command is processed.
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true))) {
-			bw.write(commandParameters + "\n");
-			return formatMessage(MESSAGE_ADD, new Object[]{fileName, commandParameters});
-		}
-		catch (IOException e) {
-			return formatMessage(MESSAGE_INVALID_PARAMETER, new Object[]{commandParameters});
-		}
+		ArrayList<String> temp = new ArrayList<String>();
+		
+		temp.add(commandParameters);
+		
+		return writeListContentsToFile(temp, MESSAGE_ADD, new Object[]{fileName, commandParameters}, 
+									   MESSAGE_INVALID_PARAMETER, new Object[]{commandParameters});
 	}
 	
 	protected static String deleteExistingLine(String commandParameters) {
@@ -144,39 +141,14 @@ public class TextBuddy {
 			return formatMessage(MESSAGE_INVALID_PARAMETER, new Object[]{commandParameters});
 		}
 		
-		String deletedLine = "";
-		StringBuffer sb = new StringBuffer("");
-		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-			int currentLineNumber = 0;
-			String currentLine = "";
-
-			// Stores all lines except for the deleted line in a StringBuffer for write-back later.
-			while ((currentLine = br.readLine()) != null) {
-				currentLineNumber++;
-				if (currentLineNumber != deletedLineNumber) {
-					sb.append(currentLine + "\n");
-				}
-				else {
-					deletedLine = currentLine;
-				}
-			}
-			
-			// Returns Line Not Found message when the user-specified line number is out of valid range.
-			if (deletedLineNumber > currentLineNumber)
-				return formatMessage(MESSAGE_DELETE_LINE_NOT_FOUND, new Object[]{deletedLineNumber, fileName});
-		}
-		catch (IOException e) {
-			return MESSAGE_DELETE_FAIL;
-		}
+		ArrayList<String> temp = addFileContentsToList();
 		
-		// Writes all lines from the StringBuffer back to file.
-		try (FileWriter fw = new FileWriter(new File(fileName))) {
-			fw.write(sb.toString());
-		}
-		catch (IOException e) {
-			return MESSAGE_DELETE_FAIL;
-		}
-		return formatMessage(MESSAGE_DELETE_SUCCESS, new Object[]{fileName, deletedLine});
+		if (deletedLineNumber > temp.size() || deletedLineNumber < 1)
+			return formatMessage(MESSAGE_DELETE_LINE_NOT_FOUND, new Object[]{deletedLineNumber, fileName});
+		else
+			temp.remove(deletedLineNumber-1);
+		
+		return writeListContentsToFile(temp, MESSAGE_DELETE_SUCCESS, new Object[]{deletedLineNumber, fileName}, MESSAGE_DELETE_FAIL, null);
 	}
 	
 	protected static String displayFileContents() {
@@ -212,7 +184,7 @@ public class TextBuddy {
 			
 		Collections.sort(listOfContents);
 		
-		return writeListContentsToFile(listOfContents);
+		return writeListContentsToFile(listOfContents, MESSAGE_SORT_SUCCESS, new Object[]{fileName}, MESSAGE_SORT_FAIL, new Object[]{fileName});
 	}
 	
 	//=========================================================================================================================
@@ -256,15 +228,15 @@ public class TextBuddy {
 		return temp;
 	}	
 	
-	private static String writeListContentsToFile(ArrayList<String> temp) {
+	private static String writeListContentsToFile(ArrayList<String> temp, String success, Object[] successArg, String fail, Object[] failArg) {
 		try (FileWriter fw = new FileWriter(new File(fileName))) {
 			for (String s : temp)
 				fw.write(s + "\n");
 			
-			return formatMessage(MESSAGE_SORT_SUCCESS, new Object[]{fileName});
+			return formatMessage(success, successArg);
 		}
 		catch (IOException e) {
-			return formatMessage(MESSAGE_SORT_FAIL, new Object[]{fileName});
+			return formatMessage(fail, failArg);
 		}
 	}		
 }
