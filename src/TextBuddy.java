@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -24,12 +25,13 @@ public class TextBuddy {
 	
 	private static final String MESSAGE_ADD = "added to %1$s: \"%2$s\"\n";
 	private static final String MESSAGE_DELETE_SUCCESS = "deleted from %1$s: \"%2$s\"\n";
-	private static final String MESSAGE_DELETE_FAIL = "unable to delete line.";
+	private static final String MESSAGE_DELETE_FAIL = "unable to delete line.\n";
 	private static final String MESSAGE_DELETE_LINE_NOT_FOUND = "line number %1$d does not exist in %2$s\n";
 	private static final String MESSAGE_CLEAR_SUCCESS = "all content deleted from %1$s\n";
-	private static final String MESSAGE_CLEAR_FAIL = "unable to clear file";
+	private static final String MESSAGE_CLEAR_FAIL = "unable to clear file\n";
 	private static final String MESSAGE_SORT_SUCCESS = "%1$s has been alphabetically sorted\n";
-	private static final String MESSAGE_SORT_FAIL = "unable to sort %1$s";
+	private static final String MESSAGE_SORT_FAIL = "unable to sort %1$s\n";
+	private static final String MESSAGE_SEARCH_FAIL = "unable to find any terms with \"%1$s\" in %2$s\n";
 	private static final String MESSAGE_EXIT = "Thank you for using TextBuddy.";
 	
 	private static final String MESSAGE_WELCOME = "Welcome to TextBuddy. %1$s is now ready for use.";
@@ -112,6 +114,8 @@ public class TextBuddy {
 			return clearFileContents();
 		case "sort":
 			return sortFileContents();
+		case "search":
+			return searchFileContents(commandParameters);
 		case "exit":
 			displayMessage(MESSAGE_EXIT, true);
 			System.exit(0);
@@ -190,6 +194,28 @@ public class TextBuddy {
 		Collections.sort(listOfContents);
 		
 		return writeListContentsToFile(listOfContents, MESSAGE_SORT_SUCCESS, new Object[]{fileName}, MESSAGE_SORT_FAIL, new Object[]{fileName});
+	}
+	
+	protected static String searchFileContents(String searchTerms) {
+		ArrayList<String> listOfContents = addFileContentsToList();
+		HashMap<Integer, String> matchedEntries = new HashMap<Integer, String>();
+		
+		for (int i = 0; i < listOfContents.size(); i++) {
+			if (listOfContents.get(i).equals(searchTerms)) {
+				matchedEntries.put(i+1, listOfContents.get(i));
+			}
+		}
+		
+		String searchResult = "";
+		
+		for (HashMap.Entry<Integer, String> entry : matchedEntries.entrySet()) {
+			searchResult = searchResult + entry.getKey()+ ". " + entry.getValue() + "\n";
+		}
+		
+		if (searchResult.trim().isEmpty())
+			return formatMessage(MESSAGE_SEARCH_FAIL, new Object[]{searchTerms, fileName});
+		else
+			return searchResult;
 	}
 	
 	//=========================================================================================================================
