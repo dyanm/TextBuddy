@@ -214,6 +214,17 @@ public class TextBuddy {
 	protected static String sortFileContents() {
 		ArrayList<String> listOfContents = new ArrayList<String>();
 		
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+			String line = "";
+			
+			while ((line = br.readLine()) != null) {
+				listOfContents.add(line);
+			}
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		if (listOfContents.isEmpty())
 				return formatMessage(MESSAGE_FILE_EMPTY, new Object[]{fileName});
 			
