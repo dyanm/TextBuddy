@@ -11,7 +11,7 @@ public class TextBuddyTest {
 	private String fileName = "testFile.txt";
 	
 	//@Test
-	public void testAll() {
+	public void testAllCE1() {
 		testLoadFile();
 		testAddNewLine();
 		testDeleteExistingLine();
@@ -21,7 +21,7 @@ public class TextBuddyTest {
 	
 	//@Test
 	public void testLoadFile() {
-		TextBuddy.clearFileContents(fileName);
+		TextBuddy.clearFileContents();
 		String[] args = {"testFile.txt"};
 		TextBuddy.loadFile(args);
 		assertTrue(new File(fileName).exists());
@@ -40,7 +40,7 @@ public class TextBuddyTest {
 
 	//@Test
 	public void testClearFileContents() {
-		TextBuddy.clearFileContents(fileName);
+		TextBuddy.clearFileContents();
 		assertEquals(TextBuddy.displayFileContents(), fileName + " is empty.\n");
 	}
 	
@@ -52,7 +52,15 @@ public class TextBuddyTest {
 	
 	@Test
 	public void testSortFileContentsIsEmpty() {
-		TextBuddy.loadFile(new String[]{fileName});
-		assertEquals(TextBuddy.sortFileContents(), fileName + " is empty\n");
+		TextBuddy.loadFile(new String[]{"emptySortTest.txt"});
+		TextBuddy.clearFileContents();
+		assertEquals(TextBuddy.sortFileContents(), "emptySortTest.txt is empty\n");
+	}
+	
+	@Test
+	public void testSortFileContentsNotEmpty() {
+		TextBuddy.loadFile(new String[]{"notEmptySortTest.txt"});
+		TextBuddy.addNewLine("little brown fox");
+		assertEquals(TextBuddy.sortFileContents(), "notEmptySortTest.txt has been alphabetically sorted\n");
 	}
 }
